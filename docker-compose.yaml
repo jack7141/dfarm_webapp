@@ -1,0 +1,9 @@
+version: "3"
+services:
+  web:
+    image: ${REGISTRY}/dafarm-webapp:latest
+    container_name: dafarm-webapp
+    ports:
+      - "0.0.0.0:3000:3000"
+    volumes:
+      - ${ENV_PATH}/.env:/app/.env
