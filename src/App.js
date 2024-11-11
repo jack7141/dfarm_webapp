@@ -5,6 +5,7 @@ import InteriorShop from "./pages/InteriorShop";
 import ProductDetail from "./pages/ProductDetail";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Footer from "./components/Footer";
+import CartPage from "./pages/CartPage";
 function App() {
     return (
         <>
@@ -14,6 +15,7 @@ function App() {
             <Routes>
                 <Route path="/" element={<InteriorShop />} />
                 <Route path="/product/:productId" element={<ProductDetail />} />
+                <Route path="/cart" element={<CartPage />} />  {/* Cart page route */}
             </Routes>
             <Footer />
         </>
