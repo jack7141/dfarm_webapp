@@ -5,3 +5,7 @@ services:
     container_name: dafarm-webapp
     ports:
       - "0.0.0.0:3000:3000"
+    volumes:
+      - ${ENV_PATH}/.env:/app/.env
+    environment:
+      - REACT_APP_API_BASE_URL=http://127.0.0.1:8000/api/v1
