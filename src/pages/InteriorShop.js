@@ -1,11 +1,31 @@
-import Banner from '../components/Banner';
-import Navbar from '../components/Navbar';
-import Categories from '../components/Categories';
+import React, { useEffect, useState } from 'react';
 import ProductCard from '../components/ProductCard';
-import { products } from '../data/products';
+import api from "../api/api";
 
 
 const InteriorShop = () => {
+    const [products, setProducts] = useState([]); // Initialize products as an empty array
+    const [loading, setLoading] = useState(true); // Loading state
+
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const response = await api.get('/products/');
+                setProducts(response.data.data); // Ensure response structure is correct
+                setLoading(false); // Set loading to false after fetching
+            } catch (error) {
+                console.error("Failed to fetch products:", error);
+                setLoading(false); // Set loading to false if fetch fails
+            }
+        };
+
+        fetchProducts();
+    }, []);
+
+    if (loading) {
+        return <div className="text-center p-8">Loading...</div>; // Display loading message while fetching
+    }
+
     return (
         <div className="min-h-screen bg-gray-50">
             <div className="pt-16">
@@ -20,9 +40,13 @@ const InteriorShop = () => {
                         </select>
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {products.map((product) => (
-                            <ProductCard key={product.id} product={product} />
-                        ))}
+                        {products.length > 0 ? (
+                            products.map((product) => (
+                                <ProductCard key={product.id} product={product} />
+                            ))
+                        ) : (
+                            <p>No products found</p>
+                        )}
                     </div>
                 </div>
             </div>
